@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import '/pages/components/dropdown.dart';
-import '/pages/components/year_slider.dart';
+import 'package:go_router/go_router.dart';
+import 'home/components/dropdown.dart';
+import 'home/components/year_slider.dart';
 
 import '../domain/prediction.dart';
 
 // ignore: camel_case_types
-class incomePredictionPage extends HookWidget {
-  const incomePredictionPage({super.key});
+class HomePage extends HookWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,10 @@ class incomePredictionPage extends HookWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: fetchPrediction,
+              onPressed: () {
+                fetchPrediction();
+                context.push('/analysys');
+              },
               child: const Text('予測'),
             ),
           ],
