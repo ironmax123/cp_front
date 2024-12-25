@@ -18,12 +18,13 @@ final goRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/analysys',
-      name: 'analysys',
+      path: '/analysis',
+      name: 'analyis',
       pageBuilder: (context, state) {
+        final data = state.extra as String;
         return MaterialPage(
           key: state.pageKey,
-          child: const AnalysisPage(),
+          child: AnalysisPage(response: data),
         );
       },
     ),

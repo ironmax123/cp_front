@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const minYear = 1990;
-const maxYear = 3000;
+const maxYear = 2050;
 Widget yearSlider({
   required int initialYear,
   required ValueChanged<int> onChanged,

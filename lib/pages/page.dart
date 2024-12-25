@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
-import 'home/components/dropdown.dart';
-import 'home/components/year_slider.dart';
+import 'components/dropdown.dart';
+import 'components/year_slider.dart';
 
 import '../domain/prediction.dart';
 
-// ignore: camel_case_types
 class HomePage extends HookWidget {
   const HomePage({super.key});
 
@@ -35,11 +34,6 @@ class HomePage extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              '予測結果:約${prediction.value.isEmpty ? '00' : prediction.value}万円',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 32),
-            ),
             yearSlider(
               initialYear: year.value,
               onChanged: (int value) {
@@ -70,11 +64,15 @@ class HomePage extends HookWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                fetchPrediction();
-                context.push('/analysys');
+              onPressed: () async {
+                await fetchPrediction();
+                // ignore: use_build_context_synchronously
+                await context.push(
+                  '/analysis',
+                  extra: prediction.value,
+                );
               },
-              child: const Text('予測'),
+              child: const Text('実行'),
             ),
           ],
         ),
