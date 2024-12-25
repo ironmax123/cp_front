@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:model_prediction/pages/components/loding.dart';
 import 'components/dropdown.dart';
 import 'components/year_slider.dart';
 
@@ -16,31 +19,7 @@ class HomePage extends HookWidget {
     final gender = useState<String>('全体');
     final occupation = useState<String>('正規雇用者の平均');
 
-    /// ローディングダイアログを表示する関数
-    void showLoadingDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        barrierDismissible: false, // 外側タップで閉じない
-        builder: (context) {
-          return const AlertDialog(
-            content: SizedBox(
-              height: 80,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('データを取得中...'),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    }
-
     Future<void> fetchPrediction() async {
-      // クルクル表示
       showLoadingDialog(context);
 
       try {
@@ -50,12 +29,9 @@ class HomePage extends HookWidget {
           occupation.value,
         );
         prediction.value = result;
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pop(); // クルクルを閉じる
-      } catch (e) {
-        // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
-        // ignore: use_build_context_synchronously
+      } catch (e) {
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('データ取得に失敗しました')),
         );
@@ -116,7 +92,6 @@ class HomePage extends HookWidget {
               ),
               onPressed: () async {
                 await fetchPrediction();
-                // ignore: use_build_context_synchronously
                 await context.push(
                   '/analysis',
                   extra: prediction.value,
