@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const minYear = 1990;
-const maxYear = 3000;
+const maxYear = 2050;
 Widget yearSlider({
   required int initialYear,
   required ValueChanged<int> onChanged,
@@ -9,8 +9,11 @@ Widget yearSlider({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      const SizedBox(width: double.infinity),
       Text('選択した年: $initialYear'), // 選択された年を表示
       Slider(
+        activeColor: Colors.blueAccent,
+        inactiveColor: Colors.blueGrey,
         value: initialYear.toDouble(),
         min: minYear.toDouble(),
         max: maxYear.toDouble(),
