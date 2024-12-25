@@ -16,13 +16,50 @@ class HomePage extends HookWidget {
     final gender = useState<String>('全体');
     final occupation = useState<String>('正規雇用者の平均');
 
-    Future<void> fetchPrediction() async {
-      final result = await Prediction().getPrediction(
-        year.value,
-        gender.value,
-        occupation.value,
+    /// ローディングダイアログを表示する関数
+    void showLoadingDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        barrierDismissible: false, // 外側タップで閉じない
+        builder: (context) {
+          return const AlertDialog(
+            content: SizedBox(
+              height: 80,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('データを取得中...'),
+                ],
+              ),
+            ),
+          );
+        },
       );
-      prediction.value = result;
+    }
+
+    Future<void> fetchPrediction() async {
+      // クルクル表示
+      showLoadingDialog(context);
+
+      try {
+        final result = await Prediction().getPrediction(
+          year.value,
+          gender.value,
+          occupation.value,
+        );
+        prediction.value = result;
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pop(); // クルクルを閉じる
+      } catch (e) {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pop();
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('データ取得に失敗しました')),
+        );
+      }
     }
 
     return Scaffold(
@@ -34,11 +71,15 @@ class HomePage extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            yearSlider(
-              initialYear: year.value,
-              onChanged: (int value) {
-                year.value = value;
-              },
+            const SizedBox(width: double.infinity),
+            SizedBox(
+              width: 512,
+              child: yearSlider(
+                initialYear: year.value,
+                onChanged: (int value) {
+                  year.value = value;
+                },
+              ),
             ),
             const SizedBox(height: 20),
             CustomDropdown(
@@ -63,7 +104,16 @@ class HomePage extends HookWidget {
               },
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.black87,
+                backgroundColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                side: const BorderSide(),
+                minimumSize: const Size(256, 64),
+              ),
               onPressed: () async {
                 await fetchPrediction();
                 // ignore: use_build_context_synchronously
@@ -72,7 +122,11 @@ class HomePage extends HookWidget {
                   extra: prediction.value,
                 );
               },
-              child: const Text('実行'),
+              child: const Text('実行',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
           ],
         ),
