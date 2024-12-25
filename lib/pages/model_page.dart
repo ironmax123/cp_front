@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:model_prediction/pages/components/dropdown.dart';
-import 'package:model_prediction/pages/components/year_slider.dart';
+import '/pages/components/dropdown.dart';
+import '/pages/components/year_slider.dart';
 
 import '../domain/prediction.dart';
 
