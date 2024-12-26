@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///ロード中のダイアログ
 void showLoadingDialog(BuildContext context) {
   showDialog(
     context: context,

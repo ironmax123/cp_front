@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///ドロップダウンの共通コンポーネント
 class CustomDropdown extends StatelessWidget {
   final String labelText;
   final String value;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///いつのデータを取得するかのスライダーコンポーネント
 const minYear = 1990;
 const maxYear = 2050;
 Widget yearSlider({

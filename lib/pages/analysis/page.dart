@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+///結果表示ページ
 class AnalysisPage extends HookWidget {
   final String? response;
 

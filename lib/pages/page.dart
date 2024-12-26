@@ -9,6 +9,7 @@ import 'components/year_slider.dart';
 
 import '../domain/prediction.dart';
 
+///メインのページ
 class HomePage extends HookWidget {
   const HomePage({super.key});
 
