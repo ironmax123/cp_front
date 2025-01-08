@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:model_prediction/pages/components/loding.dart';
 import 'components/dropdown.dart';
 import 'components/year_slider.dart';
+import 'package:gap/gap.dart';
 
 import '../domain/prediction.dart';
 
@@ -71,16 +72,12 @@ class HomePage extends HookWidget {
             CustomDropdown(
               labelText: '職業',
               value: occupation.value,
-              items: const [
-                '正規雇用者の平均',
-                '非正規雇用者の平均',
-                '個人所得の平均',
-              ],
+              items: const ['正規雇用者の平均', '非正規雇用者の平均', '個人所得の平均', '自営業者の平均'],
               onChanged: (newValue) {
                 occupation.value = newValue!;
               },
             ),
-            const SizedBox(height: 20),
+            const Gap(20),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.black87,
